@@ -40,7 +40,7 @@ public class User implements UserDetails {
     private String role;
 
     @JsonIgnore
-    @Basic(optional = false)
+    @Basic(optional = true)
     private String password = "{noop}password";
 
     @Basic(optional = false)
