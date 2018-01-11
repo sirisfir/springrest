@@ -45,13 +45,13 @@ public class ArticleController {
     }
     
     @Transactional
-    @PostMapping(consumes = "application/json")
+    @PostMapping(value="/api/articles",consumes = "application/json")
     public Article createArticle(@RequestBody Article a) {
 	a.setAuthor((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 	return this.articleRepository.save(a);
     }
     
-    @PutMapping(value = "/{articleId}", consumes = "application/json")
+    @PutMapping(value = "/api/articles/{articleId}", consumes = "application/json")
     public Article updateUser(@PathVariable("articleId") Integer articleId, @RequestBody Article article) {
 	Article a = this.articleRepository.findById(articleId).orElse(null);
 	if (a == null) {
@@ -66,7 +66,7 @@ public class ArticleController {
 	return this.articleRepository.save(a);
     }
     
-    @DeleteMapping("/{articleId}")
+    @DeleteMapping("/api/articles/{articleId}")
     public void deleteUser(@PathVariable("articleId") Integer articleId) {
 	this.articleRepository.deleteById(articleId);
     }
