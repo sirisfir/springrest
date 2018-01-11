@@ -35,7 +35,7 @@ public class UserController {
     }
     
     @GetMapping(produces = "application/json")
-    public Page<User> getUsers(@PageableDefault(page = 0, size = 10, sort = {"name"}, direction = Sort.Direction.ASC) Pageable p,
+    public Page<User> getUsers(@PageableDefault(page = 0, size = 10, sort = {"fullName"}, direction = Sort.Direction.ASC) Pageable p,
 	    @RequestParam(name = "search", defaultValue = "", required = false) String search) {
 	return this.userRepository.search(search, p);
     }
