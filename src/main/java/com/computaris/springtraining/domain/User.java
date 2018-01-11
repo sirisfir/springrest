@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -32,19 +34,20 @@ public class User implements UserDetails {
     private String username;
 
     @Basic(optional = false)
-    private String name;
+    private String fullName;
 
     @Basic(optional = false)
     private String role;
 
     @JsonIgnore
     @Basic(optional = false)
-    private String password;
+    private String password = "{noop}password";
 
     @Basic(optional = false)
     private String status;
 
     @OneToMany(mappedBy = "author")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Article> articles = new LinkedList<>();
 
     public Integer getId() {
@@ -64,12 +67,12 @@ public class User implements UserDetails {
 	this.username = username;
     }
 
-    public String getName() {
-	return name;
+    public String getFullName() {
+	return fullName;
     }
 
-    public void setName(String name) {
-	this.name = name;
+    public void setFullName(String fullName) {
+	this.fullName = fullName;
     }
 
     @JsonIgnore

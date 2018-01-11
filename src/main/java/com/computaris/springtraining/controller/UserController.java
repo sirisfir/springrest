@@ -58,7 +58,7 @@ public class UserController {
 	    u = user;
 	} else {
 	    u.setUsername(user.getUsername());
-	    u.setName(user.getName());
+	    u.setFullName(user.getFullName());
 	    u.setRole(user.getRole());
 	    u.setStatus(user.getStatus());
 	}

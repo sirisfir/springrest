@@ -17,8 +17,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     public User findOneByUsername(String email);
 
-    @Query(value = "select u from User u where u.name like %:search% or u.username like %:search%",
-	    countQuery = "select count (*) from User u where u.name like %:search% or u.username like %:search%")
+    @Query(value = "select u from User u where u.fullName like %:search% or u.username like %:search%",
+	    countQuery = "select count (*) from User u where u.fullName like %:search% or u.username like %:search%")
     public Page<User> search(@Param("search") String search, Pageable pageable);
 
 }
