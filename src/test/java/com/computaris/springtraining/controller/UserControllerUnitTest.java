@@ -1,7 +1,5 @@
 package com.computaris.springtraining.controller;
 
-import com.computaris.springtraining.domain.User;
-import com.computaris.springtraining.repository.UserRepository;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +7,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import com.thedotin.springtraining.controller.UserController;
+import com.thedotin.springtraining.domain.User;
+import com.thedotin.springtraining.repository.UserRepository;
 
 /**
  *
@@ -65,8 +67,8 @@ public class UserControllerUnitTest {
 
     @Test
     public void testGetUsers() {
-	Page<User> re = this.mockController.getUsers(new PageRequest(0, 10),"");
+	List<User> re = this.mockController.getUsers(new PageRequest(0, 10),"");
 	Assert.assertNotNull(re);
-	Assert.assertEquals(re.getContent().size(), 10);
+	Assert.assertEquals(re.size(), 10);
     }
 }

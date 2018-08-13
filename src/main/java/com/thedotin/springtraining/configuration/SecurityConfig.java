@@ -4,10 +4,8 @@
  * You are not allowed to view, edit, copy, re-use or re-engineer
  * this source code file unless specifically permissioned by Gabriel Valentin Raduti.
  */
-package com.computaris.springtraining.configuration;
+package com.thedotin.springtraining.configuration;
 
-import com.computaris.springtraining.domain.User;
-import com.computaris.springtraining.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +17,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+
+import com.thedotin.springtraining.domain.User;
+import com.thedotin.springtraining.repository.UserRepository;
 
 /**
  *

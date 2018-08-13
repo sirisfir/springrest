@@ -1,8 +1,5 @@
-package com.computaris.springtraining.controller;
+package com.thedotin.springtraining.controller;
 
-import com.computaris.springtraining.domain.Article;
-import com.computaris.springtraining.domain.User;
-import com.computaris.springtraining.repository.ArticleRepository;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.thedotin.springtraining.domain.Article;
+import com.thedotin.springtraining.domain.User;
+import com.thedotin.springtraining.repository.ArticleRepository;
 
 /**
  *
@@ -51,6 +52,7 @@ public class ArticleController {
 	return this.articleRepository.save(a);
     }
     
+    @Transactional
     @PutMapping(value = "/api/articles/{articleId}", consumes = "application/json")
     public Article updateUser(@PathVariable("articleId") Integer articleId, @RequestBody Article article) {
 	Article a = this.articleRepository.findById(articleId).orElse(null);

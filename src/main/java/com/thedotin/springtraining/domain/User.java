@@ -1,6 +1,9 @@
-package com.computaris.springtraining.domain;
+package com.thedotin.springtraining.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModel;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -21,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author valentin.raduti
  */
 @Entity
+@ApiModel
 public class User implements UserDetails {
 
     public static final String ROLE_EDITOR = "editor", ROLE_ADMIN = "admin";
@@ -123,25 +127,25 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-	return this.status.equals(STATUS_ACTIVE);
+    	return this.status.equals(STATUS_ACTIVE);
     }
 
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-	return this.status.equals(STATUS_ACTIVE);
+    	return this.status.equals(STATUS_ACTIVE);
     }
 
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-	return this.status.equals(STATUS_ACTIVE);
+    	return this.status.equals(STATUS_ACTIVE);
     }
 
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-	return this.status.equals(STATUS_ACTIVE);
+    	return this.status.equals(STATUS_ACTIVE);
     }
 
 }

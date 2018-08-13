@@ -4,7 +4,7 @@
  * You are not allowed to view, edit, copy, re-use or re-engineer
  * this source code file unless specifically permissioned by Gabriel Valentin Raduti.
  */
-package com.computaris.springtraining.configuration;
+package com.thedotin.springtraining.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

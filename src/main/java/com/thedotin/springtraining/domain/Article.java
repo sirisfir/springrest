@@ -1,4 +1,4 @@
-package com.computaris.springtraining.domain;
+package com.thedotin.springtraining.domain;
 
 import java.util.Date;
 import javax.persistence.Basic;
@@ -13,11 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  *
  * @author valentin.raduti
  */
 @Entity
+@ApiModel
 public class Article {
 
     public enum ArticleType {
@@ -31,7 +34,7 @@ public class Article {
     @Basic(optional = false)
     private String title;
 
-    @Basic
+    @Basic(optional = true)
     private String text;
 
     @Basic(optional = false)
@@ -47,19 +50,19 @@ public class Article {
     private User author;
 
     public Integer getId() {
-	return id;
+    	return id;
     }
 
     public void setId(Integer id) {
-	this.id = id;
+    	this.id = id;
     }
 
     public String getTitle() {
-	return title;
+    	return title;
     }
 
     public void setTitle(String title) {
-	this.title = title;
+    	this.title = title;
     }
 
     public String getText() {
