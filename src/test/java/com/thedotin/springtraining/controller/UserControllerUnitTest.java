@@ -1,4 +1,4 @@
-package com.computaris.springtraining.controller;
+package com.thedotin.springtraining.controller;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import com.thedotin.springtraining.controller.UserController;
 import com.thedotin.springtraining.domain.User;
 import com.thedotin.springtraining.repository.UserRepository;
 

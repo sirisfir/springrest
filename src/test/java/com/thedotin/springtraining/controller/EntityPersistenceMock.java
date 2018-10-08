@@ -1,4 +1,4 @@
-package com.computaris.springtraining.controller;
+package com.thedotin.springtraining.controller;
 
 import java.util.List;
 

@@ -444,7 +444,7 @@ public Page<Article> search(@Param("search") String search, Pageable p);
 
 Don't worry about implementing this either. Spring will proxy your method just as it proxies its default methods. After all, it has all the information it needs.
 
-After you save it, you will notice that Spring crashes: `could not resolve property: name of: com.computaris.springtraining.domain.User`.
+After you save it, you will notice that Spring crashes: `could not resolve property: name of: com.thedotin.springtraining.domain.User`.
 Indeed, we made a mistake: `select a from Article a where a.author.name`, but in our `User` class, there is no `name`. We were thinking about `username`, so let's correct the mistake.
 Just be aware that the `@Query` JPQL is not just a flat string, it gets parsed as a DSL when the application starts and will not allow syntax mistakes (which, again, is a good thing).
 
