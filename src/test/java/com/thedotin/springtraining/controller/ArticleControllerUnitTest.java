@@ -1,7 +1,7 @@
 package com.thedotin.springtraining.controller;
 
-import com.thedotin.springtraining.domain.User;
-import com.thedotin.springtraining.repository.UserRepository;
+import com.thedotin.springtraining.domain.Article;
+import com.thedotin.springtraining.repository.ArticleRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,36 +12,37 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({UserRepository.class, UserController.class})
-public class UserControllerTest {
+@PrepareForTest({ArticleRepository.class, ArticleController.class, Optional.class})
+public class ArticleControllerUnitTest {
 
-    UserRepository mockRepo;
+    ArticleRepository mockRepo;
     Page mockPage;
-    User mockUser;
-    UserController subject;
+    Article mockArticle;
+    ArticleController subject;
     Specification mockSpecification;
     Pageable mockPageable;
+    Optional mockOptional = mock(Optional.class);
 
     @Before
     public void setUp() {
-        mockRepo = mock(UserRepository.class);
+        mockRepo = mock(ArticleRepository.class);
         mockPage = mock(Page.class);
         mockSpecification = mock(Specification.class);
         mockPageable = mock(Pageable.class);
-        mockUser = mock(User.class);
-        subject = new UserController(mockRepo);
+        mockArticle= mock(Article.class);
+        subject = new ArticleController(mockRepo);
     }
 
     @After
@@ -53,23 +54,32 @@ public class UserControllerTest {
     public void findAllTest() throws Exception {
         doReturn(mockPage).when(mockRepo).findAll(any(Specification.class), any(Pageable.class));
         when(mockPage.getContent()).thenReturn(new ArrayList());
-        List results = subject.getUsers(mockPageable, "foo:bar");
+        List<Article> results = subject.getArticles(mockPageable, "foo:bar");
         verify(mockRepo, times(1)).findAll(any(Specification.class), any(Pageable.class));
         assertThat(results.size(), is(0));
     }
 
     @Test
-    public void createUserTest() {
-        doReturn(mockUser).when(mockRepo).save(any(User.class));
-        subject.createUser(mockUser);
-        verify(mockRepo, times(1)).save(any(User.class));
+    public void createOneTest() {
+        doReturn(mockArticle).when(mockRepo).save(any(Article.class));
+        subject.createArticle(mockArticle);
+        verify(mockRepo, times(1)).save(any(Article.class));
     }
 
     @Test
-    public void deleteUserTest() {
+    public void updateOneTest() {
+        doReturn(mockOptional).when(mockRepo).findById(any(Integer.class));
+        doReturn(mockArticle).when(mockOptional).orElse(any());
+        subject.updateArticle(100, mockArticle);
+        verify(mockRepo).findById(any(Integer.class));
+        verify(mockRepo).save(any(Article.class));
+    }
+
+    @Test
+    public void deleteOneTest() {
         doNothing().when(mockRepo).deleteById(any(Integer.class));
-        subject.deleteUser(100);
-        verify(mockRepo).deleteById(any(Integer.class));
+        subject.deleteArticle(100);
+        verify(mockRepo, times(1)).deleteById(any(Integer.class));
     }
 
 }

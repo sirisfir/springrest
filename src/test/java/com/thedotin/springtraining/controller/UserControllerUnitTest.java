@@ -1,73 +1,87 @@
 package com.thedotin.springtraining.controller;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import org.junit.Assert;
-import org.junit.Test;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-
 import com.thedotin.springtraining.domain.User;
 import com.thedotin.springtraining.repository.UserRepository;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
-/**
- *
- * @author valentin.raduti
- */
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.*;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({UserRepository.class, UserController.class, Optional.class})
 public class UserControllerUnitTest {
 
-    private final UserController mockController = new UserController(DAOProxyFactory.getProxy(UserRepository.class, new EntityPersistenceMock<User>() {
-	private final Random r = new Random();
+    UserRepository mockRepo;
+    Page mockPage;
+    User mockUser;
+    UserController subject;
+    Specification mockSpecification;
+    Pageable mockPageable;
+    Optional mockOptional;
 
-	@Override
-	public User build() {
-	    User u = new User();
-	    int x = r.nextInt();
-	    u.setUsername("User " + x);
-	    u.setId(x);
-	    return u;
-	}
+    @Before
+    public void setUp() {
+        mockRepo = mock(UserRepository.class);
+        mockPage = mock(Page.class);
+        mockSpecification = mock(Specification.class);
+        mockPageable = mock(Pageable.class);
+        mockUser = mock(User.class);
+        mockOptional = mock(Optional.class);
+        subject = new UserController(mockRepo);
+    }
 
-	@Override
-	public User build(Object... params) {
-	    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public List<User> getItems() {
-	    List<User> re = new LinkedList<>();
-	    for (int i = 0; i < 10; i++) {
-		re.add(build());
-	    }
-	    return re;
-	}
-
-	@Override
-	public void put(List<User> item) {
-
-	}
-
-	@Override
-	public void put(List<User> item, Object... params) {
-	    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public void remove(List<User> item) {
-
-	}
-
-	@Override
-	public void remove(List<User> item, Object... params) {
-
-	}
-    }, 20));
+    @After
+    public void after() {
+        verifyNoMoreInteractions(mockRepo);
+    }
 
     @Test
-    public void testGetUsers() {
-	List<User> re = this.mockController.getUsers(new PageRequest(0, 10),"");
-	Assert.assertNotNull(re);
-	Assert.assertEquals(re.size(), 10);
+    public void findAllTest() throws Exception {
+        doReturn(mockPage).when(mockRepo).findAll(any(Specification.class), any(Pageable.class));
+        when(mockPage.getContent()).thenReturn(new ArrayList());
+        List results = subject.getUsers(mockPageable, "foo:bar");
+        verify(mockRepo, times(1)).findAll(any(Specification.class), any(Pageable.class));
+        assertThat(results.size(), is(0));
     }
+
+    @Test
+    public void createOneTest() {
+        doReturn(mockUser).when(mockRepo).save(any(User.class));
+        subject.createUser(mockUser);
+        verify(mockRepo, times(1)).save(any(User.class));
+    }
+
+    @Test
+    public void updateOneTest() {
+        doReturn(mockOptional).when(mockRepo).findById(any(Integer.class));
+        doReturn(mockUser).when(mockOptional).orElse(any());
+        subject.updateUser(100, mockUser);
+        verify(mockRepo, times(1)).findById(any(Integer.class));
+        verify(mockRepo, times(1)).save(any(User.class));
+    }
+
+    @Test
+    public void deleteOneTest() {
+        doNothing().when(mockRepo).deleteById(any(Integer.class));
+        subject.deleteUser(100);
+        verify(mockRepo, times(1)).deleteById(any(Integer.class));
+    }
+
 }
