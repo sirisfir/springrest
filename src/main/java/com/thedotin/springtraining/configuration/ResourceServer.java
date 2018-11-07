@@ -22,26 +22,25 @@ public class ResourceServer extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-	http
-		.authorizeRequests()
-		/**
-		 * These permissions...
-		 */
-		.antMatchers("/v2/**").permitAll()
-		.antMatchers("/webjars/**").permitAll()
-		.antMatchers("/swagger-ui.html").permitAll()
-		.antMatchers("/swagger-resources/**").permitAll()
-		/**
-		 * ...should be removed in production
-		 */
-		.antMatchers("/public/**").permitAll()
-		.anyRequest().access("#oauth2.hasScope('read')");
+		http
+			.authorizeRequests()
+			/**
+			 * These permissions...
+			 */
+			.antMatchers("/v2/**").permitAll()
+			.antMatchers("/webjars/**").permitAll()
+			.antMatchers("/swagger-ui.html").permitAll()
+			.antMatchers("/swagger-resources/**").permitAll()
+			/**
+			 * ...should be removed in production
+			 */
+			.antMatchers("/public/**").permitAll()
+			.anyRequest().access("#oauth2.hasScope('read')");
     }
 
     @Override
-    public void configure(ResourceServerSecurityConfigurer resources)
-	    throws Exception {
-	resources.resourceId("springTraining");
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+		resources.resourceId("springTraining");
     }
 
 }

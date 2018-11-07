@@ -34,35 +34,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-	http
-		.csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.formLogin().disable()
-		.authorizeRequests()
-		/**
-		 * These permissions...
-		 */
-		.antMatchers("/v2/**").permitAll()
-		.antMatchers("/webjars/**").permitAll()
-		.antMatchers("/swagger-ui.html").permitAll()
-		.antMatchers("/swagger-resources/**").permitAll()
-		/**
-		 * ...should be removed in production
-		 */
-		.antMatchers("/public/**").permitAll()
-		.antMatchers("/oauth/**").permitAll();
+		http
+			.csrf().disable()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+			.formLogin().disable()
+			.authorizeRequests()
+			/**
+			 * These permissions...
+			 */
+			.antMatchers("/v2/**").permitAll()
+			.antMatchers("/webjars/**").permitAll()
+			.antMatchers("/swagger-ui.html").permitAll()
+			.antMatchers("/swagger-resources/**").permitAll()
+			/**
+			 * ...should be removed in production
+			 */
+			.antMatchers("/public/**").permitAll()
+			.antMatchers("/oauth/**").permitAll();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	auth.userDetailsService(userDetailsServiceBean());
+		auth.userDetailsService(userDetailsServiceBean());
     }
 
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
-	// provides the default AuthenticationManager as a Bean
-	return super.authenticationManagerBean();
+		// provides the default AuthenticationManager as a Bean
+		return super.authenticationManagerBean();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	return (u) -> {
 	    User user = this.userRepo.findOneByUsername(u);
 	    if (user == null) {
-		throw new UsernameNotFoundException("Email not found");
+			throw new UsernameNotFoundException("User not found");
 	    }
 	    return user;
 	};

@@ -45,13 +45,13 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-	clients.inMemory()
-		.withClient(clientId)
-		.authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-		.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-		.scopes("read", "write", "trust")
-		.secret("{noop}"+secret)
-		.accessTokenValiditySeconds(accessTokenValiditySeconds)
-		.refreshTokenValiditySeconds(refreshTokenValiditySeconds);
+        clients.inMemory()
+            .withClient(clientId)
+            .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+            .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+            .scopes("read", "write", "trust")
+            .secret("{noop}"+secret)
+            .accessTokenValiditySeconds(accessTokenValiditySeconds)
+            .refreshTokenValiditySeconds(refreshTokenValiditySeconds);
     }
 }
